@@ -71,15 +71,24 @@ app.get('/api/photo-info/:id', async (request, response) => {
     const { params: { id } } = request;
     try {
         const photoInfo = await PhotoInfo.findById(id)
+        if (!photoInfo) throw new Error(`Photo with id ${photoId} not found`);
         return response.status(200).send(photoInfo);
     } catch (error) {
-        return response.status(404).send({ msg: "Photo not found!" });
+        return response.status(404).send({ msg: error.message });
     }
 });
 
 // update photo endpint
-app.put('/api/photo/:id', (request, response) => {
-
+app.put('/api/photo/:id', async (request, response) => {
+    const { params: { id } } = request;
+    const { body } = request;
+    try {
+        const photoInfo = await PhotoInfo.findByIdAndUpdate(id, { ...body });
+        if (!photoInfo) throw new Error(`Photo with id ${photoId} not found`);
+        return response.status(200).send({ msg: "Photo updated successfully" });
+    } catch (error) {
+        return response.status(404).send({ msg: err.message });
+    }
 });
 
 // delete photo endpoint
