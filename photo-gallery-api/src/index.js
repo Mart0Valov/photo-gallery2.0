@@ -6,7 +6,7 @@ import { PhotoInfo } from './dataBaseSchemas/photoInfoSchema.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
+import fs from 'fs/promises';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -53,7 +53,6 @@ app.post('/api/upload-image/:id', upload.single('file'), (request, response) => 
     return response.status(200).send({ msg: 'Photo info uploaded successfully' });
 });
 
-
 // get all photos info endpoint
 app.get('/api/photos-info', async (request, response) => {
     const photosInfo = await PhotoInfo.find();
@@ -68,8 +67,14 @@ app.get('/api/photo/:id', async (request, response) => {
 });
 
 // get photo info bt id endpoint
-app.get('/api/photo-info/:id', (request, response) => {
-
+app.get('/api/photo-info/:id', async (request, response) => {
+    const { params: { id } } = request;
+    try {
+        const photoInfo = await PhotoInfo.findById(id)
+        return response.status(200).send(photoInfo);
+    } catch (error) {
+        return response.status(404).send({ msg: "Photo not found!" });
+    }
 });
 
 // update photo endpint
@@ -78,8 +83,19 @@ app.put('/api/photo/:id', (request, response) => {
 });
 
 // delete photo endpoint
-app.delete('/api/photo/:id', (request, response) => {
-
+app.delete('/api/photo/:id', async (request, response) => {
+    const { params: { id } } = request;
+    try {
+        Promise.all(
+            [
+                await PhotoInfo.findByIdAndDelete(id),
+                await fs.unlink(`${photosDirectory}/${id}`)
+            ]
+        );
+        return response.status(200).send({ msg: "Photo deleted successfully!" })
+    } catch (error) {
+        return response.status(404).send({ msg: "Photo not found!" });
+    }
 });
 
 app.listen(PORT, () => {
