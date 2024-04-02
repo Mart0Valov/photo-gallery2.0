@@ -1,7 +1,15 @@
-import express, { application, response } from 'express';
+import express from 'express';
+import mongoose from 'mongoose';
 
 const PORT = 3000;
 const app = express();
+
+// datababse connection
+mongoose.connect('mongodb://localhost/photo-gallery')
+    .then(() => console.log('Connected to database'))
+    .catch((err) => console.error(err));
+
+app.use(express.json());
 
 // upload photo endpoint
 app.post('/api/upload', (request, response) => {
