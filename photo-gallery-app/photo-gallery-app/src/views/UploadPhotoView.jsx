@@ -1,14 +1,11 @@
 import { useForm } from 'react-hook-form';
 import uploadPhotoInfo from '../services/uploadPhotoInfo.service.js';
 import photoUpload from '../services/photoUpload.service.js';
-// import photoUpload from '../services/photoUpload.service.js';
-// import photoUpload from '../services/photoUpload.service.js';
 
-const UploadEditView = () => {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+const UploadPhotoView = () => {
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
 
     const onSubmit = async data => {
-        console.log(errors);
         try {
             // sending image info
             const photoInfoId = await uploadPhotoInfo(data.title, data.description);
@@ -19,6 +16,8 @@ const UploadEditView = () => {
         } catch (error) {
             // TODO: add some logic to show error to user
             console.log(error);
+        } finally {
+            reset();
         }
     };
 
@@ -38,4 +37,4 @@ const UploadEditView = () => {
     );
 };
 
-export default UploadEditView;
+export default UploadPhotoView;

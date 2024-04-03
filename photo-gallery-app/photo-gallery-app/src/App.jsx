@@ -1,9 +1,10 @@
 import './App.css'
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import HomeView from './views/HomeView';
-import UploadEditView from './views/UploadEditView';
+import UploadPhotoView from './views/UploadPhotoView';
 import SinglePhotoView from './views/SinglePhotoView';
 import Header from './components/Header/Header';
+import EditPhotoView from './views/EditPhotoView';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -13,9 +14,9 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomeView />} />
-        <Route path="/upload" element={<UploadEditView />} />
+        <Route path="/upload" element={<UploadPhotoView />} />
         <Route path="/photo/:id" element={<SinglePhotoView />} />
-        <Route path="/edit/:id" element={<UploadEditView />} />
+        <Route path="/edit/:id" element={<EditPhotoView />} />
       </Routes>
     </BrowserRouter>
 
