@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import PhotoElement from '../components/ImageElement/PhotoElement';
 
 const HomeView = () => {
     // get all photos info from api
@@ -14,7 +15,7 @@ const HomeView = () => {
     return (
         <div>
             <p>List of all photos</p>
-            {photosInfo.length !== 0 ? photosInfo.map(photoInfo => <p key={photoInfo._id}>{photoInfo.title}</p>) : <p>Currently there are no photos</p>}
+            {photosInfo.length !== 0 ? photosInfo.map(photoInfo => <PhotoElement key={photoInfo._id} photoId={photoInfo._id} />) : <p>Currently there are no photos</p>}
         </div>
     )
 };
