@@ -9,4 +9,4 @@
 ## photo-gallery-app
 ### In order to use the app. First go to the photo-gallery-app directory and run the following commands in the browser:
 #### npm install 
-#### npm ren devF
+#### npm ren dev
