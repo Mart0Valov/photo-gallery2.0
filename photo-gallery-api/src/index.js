@@ -7,6 +7,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import fs from 'fs/promises';
+import { existsSync } from 'fs';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -51,7 +53,7 @@ app.post('/api/upload-image-info', async (request, response) => {
 // upload photo endpoint to local file system
 app.post('/api/upload-image/:id', upload.single('file'), (request, response) => {
     // sending response to the client that the file is saved successfully.
-    return response.status(200).send({ msg: 'Photo info uploaded successfully' });
+    return response.status(200).send({ msg: 'Photo uploaded successfully' });
 });
 
 // get all photos info from database endpoint 
