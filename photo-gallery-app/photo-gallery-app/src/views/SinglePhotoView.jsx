@@ -19,19 +19,26 @@ const SinglePhotoView = () => {
         }
     }
 
-    useEffect(() => singlePhotoInfo(photoId).then(data => setPhotoInfo({ ...data })), []);
+    useEffect(() => { singlePhotoInfo(photoId).then(data => setPhotoInfo({ ...data })) }, []);
 
 
     return (
         <>
             {
                 photoInfo &&
-                <div>
-                    <h1>{photoInfo.title}</h1>
-                    <p>{photoInfo.description}</p>
-                    <img src={`http://localhost:3000/api/photo/${photoId}?${new Date().getTime()}`} />
-                    <button onClick={() => navigate(`/edit/${photoId}`)}>Edit</button>
-                    <button onClick={onDelete}>Delete</button>
+                <div className='single-view'>
+                    <div>
+                        <h1>{photoInfo.title}</h1>
+                        <p>{photoInfo.description}</p>
+                    </div>
+                    <div>
+                        <img className='single-view-img' src={`http://localhost:3000/api/photo/${photoId}?${new Date().getTime()}`} />
+
+                    </div>
+                    <div className='buttons'>
+                        <button onClick={() => navigate(`/edit/${photoId}`)}>Edit</button>
+                        <button onClick={onDelete}>Delete</button>
+                    </div>
                 </div>
             }
         </>

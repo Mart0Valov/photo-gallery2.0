@@ -11,11 +11,12 @@ const HomeView = () => {
             .then(data => setPhotosInfo(data))
             .catch(error => console.log(error));
     }, []);
-    // console.log(photosInfo);
+
     return (
         <div>
-            <p>List of all photos</p>
-            {photosInfo.length !== 0 ? photosInfo.map(photoInfo => <PhotoElement key={photoInfo._id} photoId={photoInfo._id} />) : <p>Currently there are no photos</p>}
+            <div className='home-view'>
+                {photosInfo.length !== 0 ? photosInfo.map(photoInfo => <PhotoElement key={photoInfo._id} photoId={photoInfo._id} />) : <p>Currently there are no photos</p>}
+            </div>
         </div>
     )
 };

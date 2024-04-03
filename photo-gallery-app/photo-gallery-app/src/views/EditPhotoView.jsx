@@ -8,10 +8,6 @@ import updatePhoto from '../services/updatePhoto.js';
 const EditPhotoView = () => {
     const photoId = useParams().id;
     const navigate = useNavigate();
-    // const [photoData, setPhotoData] = useState({
-    //     title: 'gell',
-    //     description: 'hell'
-    // });
 
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
 
@@ -35,18 +31,22 @@ const EditPhotoView = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input type="text" {...register('title', { required: 'Title is required!' })} />
-            {errors.title && <p>{errors.title.message}</p>}
+        <div>
+            <h1>Edit photo</h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="form">
+                <input type="text" {...register('title', { required: 'Title is required!' })} />
+                {errors.title && <p>{errors.title.message}</p>}
 
-            <input type="text" {...register('description', { required: 'Description is required!' })} />
-            {errors.description && <p>{errors.description.message}</p>}
+                <input type="text" {...register('description', { required: 'Description is required!' })} />
+                {errors.description && <p>{errors.description.message}</p>}
 
-            <input type="file" {...register('file')} />
-            {errors.file && <p>{errors.file.message}</p>}
+                <input type="file" {...register('file')} />
+                {errors.file && <p>{errors.file.message}</p>}
 
-            <button type="submit">Update</button>
-        </form>
+                <button type="submit">Update</button>
+            </form>
+        </div>
+
     );
 };
 

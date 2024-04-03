@@ -10,16 +10,17 @@ function App() {
   // const [count, setCount] = useState(0)
 
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomeView />} />
-        <Route path="/upload" element={<UploadPhotoView />} />
-        <Route path="/photo/:id" element={<SinglePhotoView />} />
-        <Route path="/edit/:id" element={<EditPhotoView />} />
-      </Routes>
-    </BrowserRouter>
-
+    <div className='full-width'>
+      <BrowserRouter>
+        <Header />
+        <Routes >
+          <Route path="/" element={<HomeView />} />
+          <Route path="/upload" element={<UploadPhotoView />} />
+          <Route path="/photo/:id" element={<SinglePhotoView />} />
+          <Route path="/edit/:id" element={<EditPhotoView />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
