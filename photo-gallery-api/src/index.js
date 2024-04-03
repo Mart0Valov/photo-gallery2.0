@@ -24,6 +24,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+const photosDirectory = path.join(__dirname, '../photos');
+
 
 // datababse connection
 mongoose.connect('mongodb://localhost/photo-gallery')
@@ -33,9 +35,8 @@ mongoose.connect('mongodb://localhost/photo-gallery')
 // middleware
 app.use(express.json());
 app.use(cors());
-const photosDirectory = path.join(__dirname, '../photos');
 
-// upload image info
+// upload photo info to database
 app.post('/api/upload-image-info', async (request, response) => {
     const { body } = request;
     const newPhotoInfo = new PhotoInfo(body);
@@ -47,26 +48,26 @@ app.post('/api/upload-image-info', async (request, response) => {
     }
 });
 
-// upload photo endpoint
+// upload photo endpoint to local file system
 app.post('/api/upload-image/:id', upload.single('file'), (request, response) => {
     // sending response to the client that the file is saved successfully.
     return response.status(200).send({ msg: 'Photo info uploaded successfully' });
 });
 
-// get all photos info endpoint
+// get all photos info from database endpoint 
 app.get('/api/photos-info', async (request, response) => {
     const photosInfo = await PhotoInfo.find();
     return response.status(200).send(photosInfo);
 });
 
-// get photo by id endpoint
+// get photo by id from the local filesystem endpoint
 app.get('/api/photo/:id', async (request, response) => {
     const { params: { id } } = request;
     const filePath = path.join(photosDirectory, id);
     return response.sendFile(filePath);
 });
 
-// get photo info bt id endpoint
+// get photo info by id from database endpoint
 app.get('/api/photo-info/:id', async (request, response) => {
     const { params: { id } } = request;
     try {
@@ -78,7 +79,7 @@ app.get('/api/photo-info/:id', async (request, response) => {
     }
 });
 
-// update photo endpint
+// update photo info in database endpint
 app.put('/api/photo/:id', async (request, response) => {
     const { params: { id } } = request;
     const { body } = request;
@@ -87,11 +88,11 @@ app.put('/api/photo/:id', async (request, response) => {
         if (!photoInfo) throw new Error(`Photo with id ${photoId} not found`);
         return response.status(200).send({ msg: "Photo updated successfully" });
     } catch (error) {
-        return response.status(404).send({ msg: err.message });
+        return response.status(404).send({ msg: error.message });
     }
 });
 
-// delete photo endpoint
+// delete photo info from database and the photo from the file system endpoint
 app.delete('/api/photo/:id', async (request, response) => {
     const { params: { id } } = request;
     try {
