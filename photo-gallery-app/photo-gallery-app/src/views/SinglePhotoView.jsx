@@ -19,9 +19,7 @@ const SinglePhotoView = () => {
         }
     }
 
-    useEffect(() => {
-        singlePhotoInfo(photoId).then(data => setPhotoInfo({ ...data }));
-    }, [photoId]);
+    useEffect(() => singlePhotoInfo(photoId).then(data => setPhotoInfo({ ...data })), []);
 
 
     return (
@@ -31,7 +29,7 @@ const SinglePhotoView = () => {
                 <div>
                     <h1>{photoInfo.title}</h1>
                     <p>{photoInfo.description}</p>
-                    <img src={`http://localhost:3000/api/photo/${photoId}`} />
+                    <img src={`http://localhost:3000/api/photo/${photoId}?${new Date().getTime()}`} />
                     <button onClick={() => navigate(`/edit/${photoId}`)}>Edit</button>
                     <button onClick={onDelete}>Delete</button>
                 </div>

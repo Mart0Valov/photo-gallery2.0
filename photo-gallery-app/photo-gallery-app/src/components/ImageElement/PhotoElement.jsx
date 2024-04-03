@@ -6,7 +6,7 @@ const PhotoElement = ({ photoId }) => {
     const navigate = useNavigate();
     return (
         <div onClick={() => navigate(`/photo/${photoId}`)}>
-            <img className="fixed-size-photo" src={`http://localhost:3000/api/photo/${photoId}`} />
+            <img className="fixed-size-photo" src={`http://localhost:3000/api/photo/${photoId}?${new Date().getTime()}`} />
         </div>
     );
 };
